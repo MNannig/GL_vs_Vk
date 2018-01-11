@@ -40,12 +40,25 @@ int TestRunner::run()
     if (!arguments.hasArgument("api"))
         return errorCallback("Missing `-api` argument!");
 
+    if (!arguments.hasArgument("n"))
+        return errorCallback("Missing `-n` argument!");
+
+    if (!arguments.hasArgument("nt"))
+        return errorCallback("Missing `-nt` argument!");
+
     int testNum = -1;
+    int n = -1;
+    int nt = -1;
     try {
         testNum = arguments.getIntArgument("t");
+        n = arguments.getIntArgument("n");
+        nt = arguments.getIntArgument("nt");
     } catch (...) {
         // ignore, will fail with proper message later
     }
+
+    printf("n = %i   nt = %i\n", n, nt);
+    //getchar();
 
     if (testNum < 1 || testNum > TESTS)
         return errorCallback("Invalid test number!");
@@ -58,7 +71,7 @@ int TestRunner::run()
     bool benchmarkMode = arguments.hasArgument("benchmark");
     float benchmarkTime = kDefaultTestBenchmarkTime;
 
-    if (benchmarkMode && arguments.hasArgument("time")) {
+    if(benchmarkMode && arguments.hasArgument("time")) {
         try {
             benchmarkTime = arguments.getFloatArgument("time");
         } catch (...) {
@@ -68,13 +81,13 @@ int TestRunner::run()
 
     auto testStartTime = BenchmarkableTest::getCurrentTime();
     if (api == "gl") {
-        return run_gl(testNum, multithreaded, benchmarkMode, benchmarkTime, testStartTime);
+        return run_gl(testNum, multithreaded, benchmarkMode, benchmarkTime, testStartTime, n, nt);
     } else {
-        return run_vk(testNum, multithreaded, benchmarkMode, benchmarkTime, testStartTime);
+        return run_vk(testNum, multithreaded, benchmarkMode, benchmarkTime, testStartTime, n, nt);
     }
 }
 
-int TestRunner::run_gl(int testNumber, bool multithreaded, bool benchmarkMode, float benchmarkTime, double testStartTime)
+int TestRunner::run_gl(int testNumber, bool multithreaded, bool benchmarkMode, float benchmarkTime, double testStartTime, int n, int nt)
 {
     std::unique_ptr<BenchmarkableTest> test;
 
@@ -82,10 +95,10 @@ int TestRunner::run_gl(int testNumber, bool multithreaded, bool benchmarkMode, f
     case 1:
         if (multithreaded) {
             test = std::unique_ptr<BenchmarkableTest>(
-                new tests::test_gl::MultithreadedBallsSceneTest(benchmarkMode, benchmarkTime));
+                new tests::test_gl::MultithreadedBallsSceneTest(benchmarkMode, benchmarkTime, n, nt));
         } else {
             test = std::unique_ptr<BenchmarkableTest>(
-                new tests::test_gl::SimpleBallsSceneTest(benchmarkMode, benchmarkTime));
+                new tests::test_gl::SimpleBallsSceneTest(benchmarkMode, benchmarkTime, n, nt));
         }
         break;
 
@@ -123,7 +136,7 @@ int TestRunner::run_gl(int testNumber, bool multithreaded, bool benchmarkMode, f
     }
 }
 
-int TestRunner::run_vk(int testNumber, bool multithreaded, bool benchmarkMode, float benchmarkTime, double testStartTime)
+int TestRunner::run_vk(int testNumber, bool multithreaded, bool benchmarkMode, float benchmarkTime, double testStartTime, int n, int nt)
 {
     std::unique_ptr<BenchmarkableTest> test;
 
@@ -131,20 +144,20 @@ int TestRunner::run_vk(int testNumber, bool multithreaded, bool benchmarkMode, f
     case 1:
         if (multithreaded) {
             test = std::unique_ptr<BenchmarkableTest>(
-                new tests::test_vk::MultithreadedBallsSceneTest(benchmarkMode, benchmarkTime));
+                new tests::test_vk::MultithreadedBallsSceneTest(benchmarkMode, benchmarkTime, n, nt));
         } else {
             test = std::unique_ptr<BenchmarkableTest>(
-                new tests::test_vk::SimpleBallsSceneTest(benchmarkMode, benchmarkTime));
+                new tests::test_vk::SimpleBallsSceneTest(benchmarkMode, benchmarkTime, n, nt));
         }
         break;
 
     case 2:
         if (multithreaded) {
             test = std::unique_ptr<BenchmarkableTest>(
-                new tests::test_vk::MultithreadedTerrainSceneTest(benchmarkMode, benchmarkTime));
+                new tests::test_vk::MultithreadedTerrainSceneTest(benchmarkMode, benchmarkTime,n, nt));
         } else {
             test =
-                std::unique_ptr<BenchmarkableTest>(new tests::test_vk::TerrainSceneTest(benchmarkMode, benchmarkTime));
+                std::unique_ptr<BenchmarkableTest>(new tests::test_vk::TerrainSceneTest(benchmarkMode, benchmarkTime,n ,nt));
         }
         break;
 

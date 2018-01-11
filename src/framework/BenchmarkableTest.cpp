@@ -8,6 +8,22 @@
 #include <string>
 
 namespace framework {
+BenchmarkableTest::BenchmarkableTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
+    : TestInterface()
+    , _benchmarkEnabled(benchmarkMode)
+    , _firstSecondIgnored(false)
+    , _benchmarkTime(benchmarkTime)
+    , _minFrameTime(std::numeric_limits<double>::max())
+    , _maxFrameTime(0.0)
+    , _startTime(0.0)
+    , _lastMeasureTime(0.0)
+    , _measuredTime(0.0)
+    , _frameCount(0u)
+    , _n(n)
+    , _nt(nt)
+{
+}
+
 BenchmarkableTest::BenchmarkableTest(bool benchmarkMode, float benchmarkTime)
     : TestInterface()
     , _benchmarkEnabled(benchmarkMode)

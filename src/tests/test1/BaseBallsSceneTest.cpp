@@ -37,6 +37,32 @@ void BaseBallsSceneTest::initTestState()
         _vertices = verticesGenerator.vertices;
     }
 }
+void BaseBallsSceneTest::initTestState(unsigned long n)
+{
+    // Balls
+    {
+        const float SPEED_SCALE = 0.3f;
+
+        _balls = std::vector<common::Ball>{};
+        //_balls.reserve(kBallCount);
+        _balls.reserve(n);
+
+        //for (size_t i = 0; i < kBallCount; ++i) {
+        for (size_t i = 0; i < n; ++i) {
+            auto position = base::random::getRandomVec4({-1.0, -1.0, -1.0, 0.0}, {1.0, 1.0, 1.0, 0.0});
+            auto color = base::random::getRandomVec4({0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
+            auto speed = base::random::getRandomVec4({-1.0, -1.0, -1.0, 0.0}, {1.0, 1.0, 1.0, 0.0});
+
+            _balls.push_back({position, color, (glm::normalize(speed) * SPEED_SCALE)});
+        }
+    }
+
+    // Vertices
+    {
+        common::SphereVerticesGenerator verticesGenerator{kSphereSlices, kSphereStacks};
+        _vertices = verticesGenerator.vertices;
+    }
+}
 
 void BaseBallsSceneTest::updateTestState(float frameTime)
 {

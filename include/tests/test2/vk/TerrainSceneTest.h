@@ -10,7 +10,7 @@ namespace test_vk {
 class TerrainSceneTest : public BaseTerrainSceneTest, public framework::VKTest
 {
   public:
-    TerrainSceneTest(bool benchmarkMode, float benchmarkTime);
+    TerrainSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt);
 
     void setup() override;
     void run() override;

@@ -7,6 +7,12 @@ const bool kDebugEnabled = false;
 }
 
 namespace framework {
+VKTest::VKTest(const std::string& testName, bool benchmarkMode, float benchmarkTime, int n, int nt)
+    : BenchmarkableTest(benchmarkMode, benchmarkTime, n, nt)
+    , base::vkx::Application("[VK] " + testName, {WINDOW_WIDTH, WINDOW_HEIGHT}, kDebugEnabled)
+{
+}
+
 VKTest::VKTest(const std::string& testName, bool benchmarkMode, float benchmarkTime)
     : BenchmarkableTest(benchmarkMode, benchmarkTime)
     , base::vkx::Application("[VK] " + testName, {WINDOW_WIDTH, WINDOW_HEIGHT}, kDebugEnabled)

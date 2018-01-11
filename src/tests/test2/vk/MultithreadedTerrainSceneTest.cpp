@@ -11,9 +11,9 @@
 
 namespace tests {
 namespace test_vk {
-MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode, float benchmarkTime)
+MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
     : BaseTerrainSceneTest()
-    , VKTest("MultithreadedTerrainSceneTest", benchmarkMode, benchmarkTime)
+    , VKTest("MultithreadedTerrainSceneTest", benchmarkMode, benchmarkTime, n, nt)
     , _semaphoreIndex(0u)
 {
 }
@@ -85,7 +85,15 @@ void MultithreadedTerrainSceneTest::createCommandBuffers()
 void MultithreadedTerrainSceneTest::createSecondaryCommandBuffers()
 {
     // TODO: think on how to extend this for arbitrary std::thread::hardware_concurrency() value
-    static const std::size_t threads = 4;
+    //static const std::size_t threads = 4;
+    
+    static std::size_t threads = -1;
+    if(_nt == 0){
+        threads = std::thread::hardware_concurrency();
+    }
+    else{
+        threads = _nt;
+    }
 
     _threadCmdPools.resize(threads);
     for (auto& sndCmdPool : _threadCmdPools) {
@@ -368,7 +376,7 @@ uint32_t MultithreadedTerrainSceneTest::getNextFrameIndex() const
     return nextFrameAcquireStatus.value;
 }
 
-void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t threadIndex, std::size_t frameIndex) const
+void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t threadIndex, std::size_t frameIndex) const                //CUADRANTES POR CADA THREAD ?
 {
     TIME_IT("CmdBuffer (secondary) building");
 

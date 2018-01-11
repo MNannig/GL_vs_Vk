@@ -5,16 +5,14 @@
 
 namespace tests {
 namespace test_gl {
-SimpleBallsSceneTest::SimpleBallsSceneTest(bool benchmarkMode, float benchmarkTime)
-    : BaseBallsSceneTest()
-    , GLTest("SimpleBallsSceneTest", benchmarkMode, benchmarkTime)
+SimpleBallsSceneTest::SimpleBallsSceneTest(bool benchmarkMode, float benchmarkTime, int n , int nt) : BaseBallsSceneTest() , GLTest("SimpleBallsSceneTest", benchmarkMode, benchmarkTime, n, nt)
 {
 }
 
 void SimpleBallsSceneTest::setup()
 {
     GLTest::setup();
-    initTestState();
+    initTestState(_n);
 
     initApplication();
     initProgram();
@@ -24,6 +22,8 @@ void SimpleBallsSceneTest::setup()
 
 void SimpleBallsSceneTest::run()
 {
+    printf("hijo:  %i  %i\n", _n, _nt);
+    //getchar();
     while (!window_.shouldClose()) {
         glClear(GL_COLOR_BUFFER_BIT);
 

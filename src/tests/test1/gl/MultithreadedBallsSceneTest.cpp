@@ -10,16 +10,16 @@
 
 namespace tests {
 namespace test_gl {
-MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, float benchmarkTime)
+MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
     : BaseBallsSceneTest()
-    , GLTest("MultithreadedBallsSceneTest", benchmarkMode, benchmarkTime)
+    , GLTest("MultithreadedBallsSceneTest", benchmarkMode, benchmarkTime, n, nt)
 {
 }
 
 void MultithreadedBallsSceneTest::setup()
 {
     GLTest::setup();
-    initTestState();
+    initTestState(_n);
 
     initApplication();
     initProgram();
@@ -29,6 +29,7 @@ void MultithreadedBallsSceneTest::setup()
 
 void MultithreadedBallsSceneTest::run()
 {
+    printf("starting gl test1, n=%i  nt=%i\n", _n, _nt);
     while (!window_.shouldClose()) {
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -102,7 +103,14 @@ void MultithreadedBallsSceneTest::initVAO()
 
 void MultithreadedBallsSceneTest::updateStateMultithreaded()
 {
-    static const std::size_t threadCount = std::thread::hardware_concurrency();
+    static std::size_t threadCount = -1;
+    if(_nt == 0){
+        threadCount = std::thread::hardware_concurrency();
+    }
+    else{
+        threadCount = _nt;
+    }
+    //printf("threadCount = %lu\n", threadCount);
 
     std::vector<std::thread> threads(threadCount);
     for (std::size_t threadIndex = 0; threadIndex < threadCount; ++threadIndex) {

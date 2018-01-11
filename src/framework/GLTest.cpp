@@ -5,6 +5,12 @@
 #include <iostream>
 
 namespace framework {
+GLTest::GLTest(const std::string& testName, bool benchmarkMode, float benchmarkTime, int n, int nt)
+    : BenchmarkableTest(benchmarkMode, benchmarkTime, n, nt)
+    , window_({WINDOW_WIDTH, WINDOW_HEIGHT}, "[GL] " + testName)
+{
+}
+
 GLTest::GLTest(const std::string& testName, bool benchmarkMode, float benchmarkTime)
     : BenchmarkableTest(benchmarkMode, benchmarkTime)
     , window_({WINDOW_WIDTH, WINDOW_HEIGHT}, "[GL] " + testName)

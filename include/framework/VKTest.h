@@ -9,6 +9,7 @@ namespace framework {
 class VKTest : public BenchmarkableTest, public base::vkx::Application
 {
   public:
+    VKTest(const std::string& testName, bool benchmarkMode, float benchmarkTime, int n, int nt);
     VKTest(const std::string& testName, bool benchmarkMode, float benchmarkTime);
     virtual ~VKTest() = default;
 

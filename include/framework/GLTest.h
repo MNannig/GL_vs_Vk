@@ -3,10 +3,11 @@
 #include <base/gl/Window.h>
 #include <framework/BenchmarkableTest.h>
 
-namespace framework {
+namespace framework{
 class GLTest : public BenchmarkableTest
 {
   public:
+    GLTest(const std::string& testName, bool benchmarkMode, float benchmarkTime, int n, int nt);
     GLTest(const std::string& testName, bool benchmarkMode, float benchmarkTime);
     virtual ~GLTest() = default;
 

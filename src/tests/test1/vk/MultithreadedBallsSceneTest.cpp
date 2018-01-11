@@ -12,9 +12,9 @@
 
 namespace tests {
 namespace test_vk {
-MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, float benchmarkTime)
+MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
     : BaseBallsSceneTest()
-    , VKTest("MultithreadedBallsSceneTest", benchmarkMode, benchmarkTime)
+    , VKTest("MultithreadedBallsSceneTest", benchmarkMode, benchmarkTime, n, nt)
     , _semaphoreIndex(0u)
 {
 }
@@ -22,7 +22,7 @@ MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, flo
 void MultithreadedBallsSceneTest::setup()
 {
     VKTest::setup();
-    initTestState();
+    initTestState(_n);
 
     createCommandBuffers();
     createSecondaryCommandBuffers();
@@ -38,6 +38,7 @@ void MultithreadedBallsSceneTest::setup()
 
 void MultithreadedBallsSceneTest::run()
 {
+    printf("starting vk test1, n=%i  nt=%i\n", _n, _nt);
     while (!window().shouldClose()) {
         TIME_RESET("Frame times:");
 
@@ -84,7 +85,16 @@ void MultithreadedBallsSceneTest::createCommandBuffers()
 
 void MultithreadedBallsSceneTest::createSecondaryCommandBuffers()
 {
-    static const std::size_t threads = std::thread::hardware_concurrency();
+
+    //static const std::size_t threads = std::thread::hardware_concurrency();
+
+    static std::size_t threads = -1;
+    if(_nt == 0){
+        threads = std::thread::hardware_concurrency();
+    }
+    else{
+        threads = _nt;
+    }
 
     _threadCmdPools.resize(threads);
     for (auto& sndCmdPool : _threadCmdPools) {

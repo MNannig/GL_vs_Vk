@@ -8,8 +8,8 @@ namespace {
 const char kHeightmapPath[] = "resources/test2/heightmaps/heightmap_1024x1024.raw";
 const std::size_t kHeightmapWidth = 1024;
 const std::size_t kHeightmapHeight = 1024;
-const float kUpdateTimeFactor = 0.5f;
-const float kUpdateRadius = 384.0f;
+const float kUpdateTimeFactor = 0.7f;
+const float kUpdateRadius = 100.0f;
 const glm::vec2 kUpdateCenter = {512.0f, 512.0f};
 const float kLoDFactor = 64.0f;
 const float kFoV = 45.0f;

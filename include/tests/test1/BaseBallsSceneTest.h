@@ -14,6 +14,7 @@ class BaseBallsSceneTest
     virtual ~BaseBallsSceneTest() = default;
 
   protected:
+    void initTestState(unsigned long n);
     void initTestState();
     void updateTestState(float frameTime);
     void updateTestState(float frameTime, std::size_t rangeFrom, std::size_t rangeTo);
