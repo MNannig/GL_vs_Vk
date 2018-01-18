@@ -8,6 +8,8 @@
 
 #include <thread>
 #include <vector>
+#include <stdio.h>
+#include <math.h>
 
 namespace tests {
 namespace test_vk {
@@ -22,6 +24,7 @@ void MultithreadedTerrainSceneTest::setup()
 {
     VKTest::setup();
 
+    createTable();
     createCommandBuffers();
     createSecondaryCommandBuffers();
     createVbo();
@@ -469,6 +472,14 @@ void MultithreadedTerrainSceneTest::presentFrame(std::size_t frameIndex) const
     vk::PresentInfoKHR presentInfo{1,      &_renderSemaphores[_semaphoreIndex], 1, &window().swapchain(), &imageIndex,
                                    nullptr};
     queues().queue().presentKHR(presentInfo);
+}
+
+void MultithreadedTerrainSceneTest::createTable(){
+    int log_aux = ceil(log(_nt) / log(4));
+    int table_a = pow(4, log_aux);
+    int table_b = log_aux;
+    printf("logaritmo %i\n", log_aux);
+    int table_threads [table_a][table_b];
 }
 }
 }

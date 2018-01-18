@@ -61,8 +61,20 @@ void TerrainLoD::executeLoD(const glm::vec2& position,
 {
     switch (nodeIndex) {
     case 0:
+        if (_root.nodes[nodeIndex]) {
+            executeLoDRecursive(position, function, *_root.nodes[nodeIndex]);
+        }
+        break;
     case 1:
+        if (_root.nodes[nodeIndex]) {
+            executeLoDRecursive(position, function, *_root.nodes[nodeIndex]);
+        }
+        break;
     case 2:
+        if (_root.nodes[nodeIndex]) {
+            executeLoDRecursive(position, function, *_root.nodes[nodeIndex]);
+        }
+        break;
     case 3:
         if (_root.nodes[nodeIndex]) {
             executeLoDRecursive(position, function, *_root.nodes[nodeIndex]);

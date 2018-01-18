@@ -54,6 +54,7 @@ class MultithreadedTerrainSceneTest : public BaseTerrainSceneTest, public framew
     void prepareCommandBuffer(std::size_t frameIndex) const;
     void submitCommandBuffer(std::size_t frameIndex) const;
     void presentFrame(std::size_t frameIndex) const;
+    void createTable();
 
     base::vkx::Buffer _vbo;
     base::vkx::Buffer _ibo;
