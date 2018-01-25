@@ -479,7 +479,36 @@ void MultithreadedTerrainSceneTest::createTable(){
     int table_a = pow(4, log_aux);
     int table_b = log_aux;
     printf("logaritmo %i\n", log_aux);
+    printf("potencia %i\n", table_a);
     int table_threads [table_a][table_b];
+    switch(table_b){
+        case 0:
+            break;
+        case 1:
+            for (int i = 0; i < table_a; ++i)
+            {
+                table_threads[i][0] = (i%4);
+            }
+            break;
+            
+        case 2:
+            for(int i = 0; i <table_a; i++){
+                table_threads[i][1] = (i % 4);
+                table_threads[i][0] = i / 4;
+            }
+            break;
+        default:
+            break;
+    }
+    for (int i = 0; i < table_a; ++i)
+    {
+        for (int j = 0; j < table_b; ++j)
+        {
+            printf(" %i ", table_threads[i][j]);
+        }
+        printf("\n");
+    }
+    
 }
 }
 }
