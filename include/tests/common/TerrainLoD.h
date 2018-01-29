@@ -24,6 +24,12 @@ class TerrainLoD
     void executeLoD(const glm::vec2& position,
                     const std::function<void(std::size_t, std::ptrdiff_t)>& function,
                     std::size_t nodeIndex) const;
+    void executeThreads(const glm::vec2& position,
+                    const std::function<void(std::size_t, std::ptrdiff_t)>& function,
+                    int table_1;
+                    int c,
+                    int h,
+                    std::size_t nodeIndex) const;
 
   private:
     void load(const Heightmap& heightmap);

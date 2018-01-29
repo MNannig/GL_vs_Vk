@@ -408,6 +408,7 @@ void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t th
             };
             // TODO: think on how to extend this beyond 4-threads
             terrain().executeLoD(currentPosition(), renderChunk, threadIndex);
+            //terrain()executeThreads(currentPosition(), renderChunk, table_threads, c, table_b, threadIndex);
         }
     }
     cmdBuffer.end();
@@ -500,14 +501,7 @@ void MultithreadedTerrainSceneTest::createTable(){
         default:
             break;
     }
-    for (int i = 0; i < table_a; ++i)
-    {
-        for (int j = 0; j < table_b; ++j)
-        {
-            printf(" %i ", table_threads[i][j]);
-        }
-        printf("\n");
-    }
+    
     
 }
 }
