@@ -85,15 +85,9 @@ void TerrainLoD::executeLoD(const glm::vec2& position,
     }
 }
 
-void TerrainLoD::executeThreads(onst glm::vec2& position,
+void TerrainLoD::executeThreads(const glm::vec2& position,
                             const std::function<void(std::size_t, std::ptrdiff_t)>& function,
-                            int table_1,
-                            int c,
-                            int h,
                             std::size_t nodeIndex) const{
-    if(nivel < h){
-        
-    }
     
 }
 
