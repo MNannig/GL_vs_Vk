@@ -91,6 +91,30 @@ void TerrainLoD::executeThreads(const glm::vec2& position,
     
 }
 
+void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const glm::vec2& position,int (*table)[b]){
+    int id = nodeIndex;
+    int inf = id * a / nt;
+    int sup = inf +(a / nt);
+    for (int i = inf; i < sup; ++i)
+    {
+        //llama
+        //auto algo = navegar(position,i, a);
+        //trabajo
+    }
+    /*for (int e = 0; e < a; ++e)
+    {
+        for (int r = 0; r < b; ++r)
+        {
+            printf(" %i ", table[e][r]);
+        }
+        printf("\n");
+    }*/
+
+}
+void navegar(const glm::vec2& position, int id, int ancho){
+    
+}
+
 void TerrainLoD::load(const Heightmap& heightmap)
 {
     glm::uvec2 mapSize = heightmap.getSize();
