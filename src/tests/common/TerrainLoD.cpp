@@ -91,7 +91,7 @@ void TerrainLoD::executeThreads(const glm::vec2& position,
     
 }
 
-void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const glm::vec2& position,int (*table)[b]){
+void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const glm::vec2& position){
     int id = nodeIndex;
     int inf = id * a / nt;
     int sup = inf +(a / nt);

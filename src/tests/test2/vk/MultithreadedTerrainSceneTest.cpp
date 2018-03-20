@@ -482,6 +482,8 @@ void MultithreadedTerrainSceneTest::createTable(){
     printf("logaritmo %i\n", log_aux);
     printf("potencia %i\n", table_a);
     int table_threads [table_a][table_b];
+    int table_c = table_a * table_b;
+    int table_threads2 [table_c];
     int d = 0, i = 0, a = 1;
     for (int j = table_b-1; j>= 0; --j)
     {
@@ -489,7 +491,8 @@ void MultithreadedTerrainSceneTest::createTable(){
         while(i < table_a){
             for (int k = 0; k < a; ++k)
             {
-                table_threads[i][j] = d;
+                //table_threads[i][j] = d;
+                table_threads2[(i * table_b) + j] = d;
                 //printf("i%i j%i d%i\n", i, j, d);
                 i = i + 1;
             }
@@ -503,10 +506,16 @@ void MultithreadedTerrainSceneTest::createTable(){
         for (int r = 0; r < table_b; ++r)
         {
             printf(" %i ", table_threads[e][r]);
+            table_threads2[(e * table_b) + r] = table_threads[e][r];
         }
         printf("\n");
     }*/
-    
+    printf("%s\n", "unidimensional");
+    for (int w = 0; w < table_c; ++w)
+    {
+        /* code */
+        printf(" %i %i \n", table_threads2[w], w);
+    }
     
 }
 }
