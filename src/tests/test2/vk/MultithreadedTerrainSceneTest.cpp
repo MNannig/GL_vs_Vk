@@ -20,6 +20,13 @@ MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode,
 {
 }
 
+int table_a;
+int table_b;
+int *table_threads2;
+int n ;
+int nt;
+
+
 void MultithreadedTerrainSceneTest::setup()
 {
     VKTest::setup();
@@ -408,6 +415,8 @@ void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t th
             };
             // TODO: think on how to extend this beyond 4-threads
             terrain().executeLoD(currentPosition(), renderChunk, threadIndex);
+            terrain().DistributeLoad(table_a, table_b, n, nt,table_threads2, currentPosition(), threadIndex);
+            //void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const glm::vec2& position, int *table){
             //terrain()executeThreads(currentPosition(), renderChunk, table_threads, c, table_b, threadIndex);
         }
     }
@@ -477,8 +486,8 @@ void MultithreadedTerrainSceneTest::presentFrame(std::size_t frameIndex) const
 
 void MultithreadedTerrainSceneTest::createTable(){
     int log_aux = ceil(log(_nt) / log(4));
-    int table_a = pow(4, log_aux);
-    int table_b = log_aux;
+    table_a = pow(4, log_aux);
+    table_b = log_aux;
     printf("logaritmo %i\n", log_aux);
     printf("potencia %i\n", table_a);
     int table_threads [table_a][table_b];

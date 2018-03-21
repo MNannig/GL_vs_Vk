@@ -27,7 +27,7 @@ class TerrainLoD
     void executeThreads(const glm::vec2& position,
                     const std::function<void(std::size_t, std::ptrdiff_t)>& function,
                     std::size_t nodeIndex) const;
-    void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const glm::vec2& position);
+    void DistributeLoad(int a, int b, int n, int nt, int *table, const glm::vec2& position ,std::size_t nodeIndex);
     void navegar(const glm::vec2& position, int id, int ancho);
 
   private:

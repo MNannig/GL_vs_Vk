@@ -91,7 +91,7 @@ void TerrainLoD::executeThreads(const glm::vec2& position,
     
 }
 
-void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const glm::vec2& position){
+void DistributeLoad(int a, int b, int n, int nt, int *table, const glm::vec2& position, std::size_t nodeIndex){
     int id = nodeIndex;
     int inf = id * a / nt;
     int sup = inf +(a / nt);
@@ -101,14 +101,12 @@ void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const gl
         //auto algo = navegar(position,i, a);
         //trabajo
     }
-    /*for (int e = 0; e < a; ++e)
+    printf("%s\n", "ASDF");
+    for (int w = 0; w < *table; ++w)
     {
-        for (int r = 0; r < b; ++r)
-        {
-            printf(" %i ", table[e][r]);
-        }
-        printf("\n");
-    }*/
+        /* code */
+        printf(" %i %i \n", table[w], w);
+    }
 
 }
 void navegar(const glm::vec2& position, int id, int ancho){
