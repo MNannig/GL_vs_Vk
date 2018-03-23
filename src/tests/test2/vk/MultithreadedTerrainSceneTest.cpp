@@ -22,7 +22,7 @@ MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode,
 
 int table_a;
 int table_b;
-int *table_threads2;
+int *p;
 int n ;
 int nt;
 
@@ -389,6 +389,7 @@ uint32_t MultithreadedTerrainSceneTest::getNextFrameIndex() const
 void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t threadIndex, std::size_t frameIndex) const                //CUADRANTES POR CADA THREAD ?
 {
     TIME_IT("CmdBuffer (secondary) building");
+    printf("a%i b%i\n",table_a, table_b);
 
     // Update secondary command buffer
     const vk::CommandBuffer& cmdBuffer = _threadCmdPools[threadIndex].cmdBuffers[frameIndex];
@@ -415,9 +416,9 @@ void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t th
             };
             // TODO: think on how to extend this beyond 4-threads
             terrain().executeLoD(currentPosition(), renderChunk, threadIndex);
-            terrain().DistributeLoad(table_a, table_b, n, nt,table_threads2, currentPosition(), threadIndex);
-            //void DistributeLoad(int a, int b, int n, int nt, std::size_t nodeIndex, const glm::vec2& position, int *table){
-            //terrain()executeThreads(currentPosition(), renderChunk, table_threads, c, table_b, threadIndex);
+            terrain().DistributeLoad(p, table_a, table_b, n, nt, threadIndex);
+            //terrain().navegar();
+            //terrain().DistributeLoad(currentPosition(), threadIndex);
         }
     }
     cmdBuffer.end();
@@ -490,7 +491,7 @@ void MultithreadedTerrainSceneTest::createTable(){
     table_b = log_aux;
     printf("logaritmo %i\n", log_aux);
     printf("potencia %i\n", table_a);
-    int table_threads [table_a][table_b];
+    //int table_threads [table_a][table_b];
     int table_c = table_a * table_b;
     int table_threads2 [table_c];
     int d = 0, i = 0, a = 1;
@@ -522,10 +523,14 @@ void MultithreadedTerrainSceneTest::createTable(){
     printf("%s\n", "unidimensional");
     for (int w = 0; w < table_c; ++w)
     {
-        /* code */
         printf(" %i %i \n", table_threads2[w], w);
     }
-    
+    p = table_threads2;
+    printf("%s\n", "PUNTERO");
+    for (int w = 0; w < table_c; ++w)
+    {
+        printf(" %i %i \n", p[w], w);
+    }
 }
 }
 }

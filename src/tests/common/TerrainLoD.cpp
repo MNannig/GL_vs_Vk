@@ -85,32 +85,23 @@ void TerrainLoD::executeLoD(const glm::vec2& position,
     }
 }
 
-void TerrainLoD::executeThreads(const glm::vec2& position,
-                            const std::function<void(std::size_t, std::ptrdiff_t)>& function,
-                            std::size_t nodeIndex) const{
-    
-}
 
-void DistributeLoad(int a, int b, int n, int nt, int *table, const glm::vec2& position, std::size_t nodeIndex){
-    int id = nodeIndex;
-    int inf = id * a / nt;
-    int sup = inf +(a / nt);
-    for (int i = inf; i < sup; ++i)
+void TerrainLoD::DistributeLoad(int *table, int a, int b, int n, int nt, std::size_t nodeIndex) const{
+    printf("thread %d\n", nodeIndex);
+    int aux = a * b;
+    for (int w = 0; w < aux; ++w)
     {
-        //llama
-        //auto algo = navegar(position,i, a);
-        //trabajo
+        printf(" %d %d \n", table[w], w);
+        
     }
-    printf("%s\n", "ASDF");
-    for (int w = 0; w < *table; ++w)
-    {
-        /* code */
-        printf(" %i %i \n", table[w], w);
-    }
-
 }
-void navegar(const glm::vec2& position, int id, int ancho){
     
+
+
+
+
+void TerrainLoD::navegar() const{
+    printf("%s\n", "NAVEGAR");
 }
 
 void TerrainLoD::load(const Heightmap& heightmap)
