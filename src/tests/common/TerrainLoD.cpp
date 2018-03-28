@@ -91,7 +91,8 @@ void TerrainLoD::DistributeLoad(int *table, int a, int b, int n, int nt, std::si
     int aux = a * b;
     for (int w = 0; w < aux; ++w)
     {
-        printf(" %d %d \n", table[w], w);
+        //printf("size %i w %i\n",table[5], table);
+        printf(" %i %i \n", table[w], w);
         
     }
 }

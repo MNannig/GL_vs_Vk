@@ -417,8 +417,6 @@ void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t th
             // TODO: think on how to extend this beyond 4-threads
             terrain().executeLoD(currentPosition(), renderChunk, threadIndex);
             terrain().DistributeLoad(p, table_a, table_b, n, nt, threadIndex);
-            //terrain().navegar();
-            //terrain().DistributeLoad(currentPosition(), threadIndex);
         }
     }
     cmdBuffer.end();
@@ -491,8 +489,9 @@ void MultithreadedTerrainSceneTest::createTable(){
     table_b = log_aux;
     printf("logaritmo %i\n", log_aux);
     printf("potencia %i\n", table_a);
-    //int table_threads [table_a][table_b];
-    int table_c = table_a * table_b;
+    int table_c = table_a * table_b;    
+    int *p = (int *)malloc(table_c*sizeof(int));
+    printf("p %i\n", p);
     int table_threads2 [table_c];
     int d = 0, i = 0, a = 1;
     for (int j = table_b-1; j>= 0; --j)
@@ -501,7 +500,6 @@ void MultithreadedTerrainSceneTest::createTable(){
         while(i < table_a){
             for (int k = 0; k < a; ++k)
             {
-                //table_threads[i][j] = d;
                 table_threads2[(i * table_b) + j] = d;
                 //printf("i%i j%i d%i\n", i, j, d);
                 i = i + 1;
@@ -511,22 +509,13 @@ void MultithreadedTerrainSceneTest::createTable(){
         a = a * 4;
         i = 0;
     }
-    /*for (int e = 0; e < table_a; ++e)
-    {
-        for (int r = 0; r < table_b; ++r)
-        {
-            printf(" %i ", table_threads[e][r]);
-            table_threads2[(e * table_b) + r] = table_threads[e][r];
-        }
-        printf("\n");
-    }*/
     printf("%s\n", "unidimensional");
     for (int w = 0; w < table_c; ++w)
     {
         printf(" %i %i \n", table_threads2[w], w);
     }
     p = table_threads2;
-    printf("%s\n", "PUNTERO");
+    printf("p[5] %u size %i %s\n",p[5], sizeof(p)/sizeof(*p), "PUNTERO");
     for (int w = 0; w < table_c; ++w)
     {
         printf(" %i %i \n", p[w], w);
