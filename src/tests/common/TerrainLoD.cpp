@@ -3,6 +3,8 @@
 #include <glm/geometric.hpp>
 #include <glm/gtx/component_wise.hpp>
 
+#include <iostream>
+
 namespace {
 uint32_t indexOf(const tests::common::Heightmap& heightmap, std::size_t x, std::size_t y)
 {
@@ -85,26 +87,7 @@ void TerrainLoD::executeLoD(const glm::vec2& position,
     }
 }
 
-
-void TerrainLoD::DistributeLoad(int *table, int a, int b, int n, int nt, std::size_t nodeIndex) const{
-    printf("thread %d\n", nodeIndex);
-    int aux = a * b;
-    for (int w = 0; w < aux; ++w)
-    {
-        //printf("size %i w %i\n",table[5], table);
-        printf(" %i %i \n", table[w], w);
-        
-    }
-}
-    
-
-
-
-
-void TerrainLoD::navegar() const{
-    printf("%s\n", "NAVEGAR");
-}
-
+ 
 void TerrainLoD::load(const Heightmap& heightmap)
 {
     glm::uvec2 mapSize = heightmap.getSize();
@@ -121,6 +104,45 @@ void TerrainLoD::load(const Heightmap& heightmap)
 
     // Indices - recursive for each level and all sub-levels
     computeNodesRecursive(heightmap, _root, {0, 0}, mapSize - glm::uvec2{1, 1});
+}
+
+void TerrainLoD::DistributeLoad(int *table, int a, int b, int n, int nt, const glm::vec2& position,
+                            const std::function<void(std::size_t, std::ptrdiff_t)>& function,
+                            std::size_t nodeIndex) const{
+
+   int gap = a / nt;
+    int bottom = nodeIndex * gap;
+    int top = bottom + gap;
+    
+   std::cout << "thread " << nodeIndex << "\n";
+    if (_root.nodes[nodeIndex])
+    {
+        for (int w = bottom; w < top; ++w)
+        {
+            //printf("size %i w %i\n",table[5], table);
+            printf(" %i %i \n", table[w], w);
+            navegar(nodeIndex, b, *_root.nodes[nodeIndex], table);
+            
+       }
+    }
+    
+       
+}
+  
+QTNode TerrainLoD::navegar(int thredIndex, int wide, const QTNode& node, int *table) const{
+    printf("%s\n", "NAVEGAR");
+    QTNode working_node;
+    int start = thredIndex * wide;
+    int end = start + wide;
+    for (int i = start; i < end; ++i)
+    {
+        std::cout << "i " << table[i] << "\n";
+        //node = *node.nodes[table[i]]
+        working_node.position = node.nodes[table[i]].position;
+    }
+    
+    return working_node;
+    
 }
 
 void TerrainLoD::computeNodesRecursive(const Heightmap& heightmap,

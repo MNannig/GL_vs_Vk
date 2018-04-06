@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <iostream>
+
 namespace tests {
 namespace test_vk {
 MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
@@ -22,6 +24,7 @@ MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode,
 
 int table_a;
 int table_b;
+int table_threads2[1000];
 int *p;
 int n ;
 int nt;
@@ -390,6 +393,8 @@ void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t th
 {
     TIME_IT("CmdBuffer (secondary) building");
     printf("a%i b%i\n",table_a, table_b);
+    n = _n;
+    nt = _nt;
 
     // Update secondary command buffer
     const vk::CommandBuffer& cmdBuffer = _threadCmdPools[threadIndex].cmdBuffers[frameIndex];
@@ -416,7 +421,8 @@ void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t th
             };
             // TODO: think on how to extend this beyond 4-threads
             terrain().executeLoD(currentPosition(), renderChunk, threadIndex);
-            terrain().DistributeLoad(p, table_a, table_b, n, nt, threadIndex);
+            std::cout << "p " << p << "\n";
+            terrain().DistributeLoad(p, table_a, table_b, n, nt, currentPosition(), renderChunk, threadIndex);
         }
     }
     cmdBuffer.end();
@@ -484,42 +490,40 @@ void MultithreadedTerrainSceneTest::presentFrame(std::size_t frameIndex) const
 }
 
 void MultithreadedTerrainSceneTest::createTable(){
-    int log_aux = ceil(log(_nt) / log(4));
-    table_a = pow(4, log_aux);
-    table_b = log_aux;
-    printf("logaritmo %i\n", log_aux);
-    printf("potencia %i\n", table_a);
-    int table_c = table_a * table_b;    
-    int *p = (int *)malloc(table_c*sizeof(int));
-    printf("p %i\n", p);
-    int table_threads2 [table_c];
-    int d = 0, i = 0, a = 1;
-    for (int j = table_b-1; j>= 0; --j)
-    {
-        d = 0;
-        while(i < table_a){
-            for (int k = 0; k < a; ++k)
-            {
-                table_threads2[(i * table_b) + j] = d;
-                //printf("i%i j%i d%i\n", i, j, d);
-                i = i + 1;
+        int log_aux = ceil(log(_nt) / log(4));
+        table_a = pow(4, log_aux);
+        table_b = log_aux;
+        printf("logaritmo %i\n", log_aux);
+        printf("potencia %i\n", table_a);
+        int table_c = table_a * table_b;    
+        //int table_threads2 [table_c];
+        p = (int *)malloc(table_c*sizeof(int));
+        //std::cout << "p " << p << " *p " << *p << " \n";
+        int d = 0, i = 0, a = 1;
+        for (int j = table_b-1; j>= 0; --j)
+        {
+            d = 0;
+            while(i < table_a){
+                for (int k = 0; k < a; ++k)
+                {
+                    p[(i * table_b) + j] = d;
+                    //std::cout << p[(i * table_b) + j] << " *p " << *p << "\n";
+                    i = i + 1;
+                }
+                d = (d + 1) % 4;
             }
-            d = (d + 1) % 4;
+            a = a * 4;
+            i = 0;
         }
-        a = a * 4;
-        i = 0;
-    }
-    printf("%s\n", "unidimensional");
-    for (int w = 0; w < table_c; ++w)
-    {
-        printf(" %i %i \n", table_threads2[w], w);
-    }
-    p = table_threads2;
-    printf("p[5] %u size %i %s\n",p[5], sizeof(p)/sizeof(*p), "PUNTERO");
-    for (int w = 0; w < table_c; ++w)
-    {
-        printf(" %i %i \n", p[w], w);
-    }
+        
+        //printf(" size %i %s\n", sizeof(p)/sizeof(*p), "PUNTERO");
+        
+        for (int i = 0; i < table_c; ++i)
+        {
+            std::cout << p[i]<< " " << i << "\n";
+        }
+        //std::cout << "p final " << p[table_c - 1] << "| puntero *p " << *p << "| P " << p << "\n";
+    
 }
 }
 }
