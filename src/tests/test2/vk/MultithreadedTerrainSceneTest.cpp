@@ -24,7 +24,6 @@ MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode,
 
 int table_a;
 int table_b;
-int table_threads2[1000];
 int *p;
 int n ;
 int nt;
@@ -107,7 +106,7 @@ void MultithreadedTerrainSceneTest::createSecondaryCommandBuffers()
     else{
         threads = _nt;
     }
-
+    threads = std::thread::hardware_concurrency();
     _threadCmdPools.resize(threads);
     for (auto& sndCmdPool : _threadCmdPools) {
         vk::CommandPoolCreateFlags cmdPoolFlags = vk::CommandPoolCreateFlagBits::eResetCommandBuffer;
@@ -420,8 +419,7 @@ void MultithreadedTerrainSceneTest::prepareSecondaryCommandBuffer(std::size_t th
                 cmdBuffer.drawIndexed(count, 1, offset / indexSize, 0, 0);
             };
             // TODO: think on how to extend this beyond 4-threads
-            terrain().executeLoD(currentPosition(), renderChunk, threadIndex);
-            std::cout << "p " << p << "\n";
+            //terrain().executeLoD(currentPosition(), renderChunk, threadIndex);
             terrain().DistributeLoad(p, table_a, table_b, n, nt, currentPosition(), renderChunk, threadIndex);
         }
     }

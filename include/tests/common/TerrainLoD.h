@@ -27,7 +27,7 @@ class TerrainLoD
     void DistributeLoad(int *table, int a, int b, int n, int nt, const glm::vec2& position,
                     const std::function<void(std::size_t, std::ptrdiff_t)>& function,
                     std::size_t nodeIndex) const;
-    QTNode navegar(int thredIndex, int wide, const QTNode& node, int *table) const;
+    QTNode navegar(int thredIndex, int w, int wide, const QTNode& node, int *table) const;
 
   private:
     void load(const Heightmap& heightmap);

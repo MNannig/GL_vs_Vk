@@ -13,7 +13,7 @@ struct QTNode
     glm::vec2 size;
     std::size_t indexCount;
     std::size_t indexOffset;
-    std::array<std::unique_ptr<QTNode>, 4> nodes;
+    std::array<std::shared_ptr<QTNode>, 4> nodes;
 };
 }
 }
