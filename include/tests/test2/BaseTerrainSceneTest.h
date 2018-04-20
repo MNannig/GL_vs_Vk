@@ -8,7 +8,7 @@ namespace tests {
 class BaseTerrainSceneTest
 {
   public:
-    BaseTerrainSceneTest();
+    BaseTerrainSceneTest(int n);
     virtual ~BaseTerrainSceneTest() = default;
 
   protected:

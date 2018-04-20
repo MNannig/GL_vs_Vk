@@ -15,6 +15,7 @@ namespace common {
 class TerrainLoD
 {
   public:
+    float _lodFactor;
     TerrainLoD(const Heightmap& heightmap, float lodFactor);
 
     const std::vector<glm::vec4>& vertices() const;
@@ -39,7 +40,7 @@ class TerrainLoD
                              const std::function<void(std::size_t, std::ptrdiff_t)>& function,
                              const QTNode& node) const;
 
-    const float _lodFactor;
+    //const float _lodFactor;
     QTNode _root;
     std::vector<glm::vec4> _vertices;
     std::vector<uint32_t> _indices;

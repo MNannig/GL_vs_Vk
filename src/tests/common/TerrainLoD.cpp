@@ -116,19 +116,26 @@ void TerrainLoD::DistributeLoad(int *table, int a, int b, int n, int nt, const g
     int top = bottom + gap;
 
     //std::cout << "w" << w << "b" << b;
-    std::cout << "a " << a << " gap" << gap << " b" << b << "\n";
+    //std::cout << "a " << a << " gap" << gap << " b" << b << "\n";
     std::cout << "thread " << nodeIndex << "\n";
-    if (_root.nodes[nodeIndex])
-    {
-        for (int w = bottom; w < top; ++w)
-        {
-            printf(" t[%i * b + 0] = %i \n", w, table[w*gap + 0]);
-            final_working_node = navegar(nodeIndex, w, b, _root, table);
-            executeLoDRecursive(position, function, final_working_node);
-            
-       }
+    if(nt == 1){
+        final_working_node = _root;
+        executeLoDRecursive(position, function, final_working_node);
     }
-    
+    else{
+
+
+        if (_root.nodes[nodeIndex])
+        {
+            for (int w = bottom; w < top; ++w)
+            {
+                ///printf(" t[%i * b + 0] = %i \n", w, table[w*gap + 0]);
+                final_working_node = navegar(nodeIndex, w, b, _root, table);
+                executeLoDRecursive(position, function, final_working_node);
+                
+           }
+        }
+    }
        
 }
   
@@ -139,7 +146,7 @@ QTNode TerrainLoD::navegar(int thredIndex,int w, int wide, const QTNode& node, i
     //int end = start + wide;
     for (int i = 0; i < wide; ++i)
     {
-        std::cout << "i " << table[w * wide +i] << "\n";
+        //std::cout << "i " << table[w * wide +i] << "\n";
         //node = *node.nodes[table[i]]
         working_node = *node.nodes[table[w * wide + i]];
     }

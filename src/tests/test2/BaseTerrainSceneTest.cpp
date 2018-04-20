@@ -11,7 +11,7 @@ const std::size_t kHeightmapHeight = 1024;
 const float kUpdateTimeFactor = 0.7f;
 const float kUpdateRadius = 100.0f;
 const glm::vec2 kUpdateCenter = {512.0f, 512.0f};
-const float kLoDFactor = 64.0f;
+const float kLoDFactor = 32.0f;
 const float kFoV = 45.0f;
 const float kAspectRatio = 800.0f / 600.0f;
 const glm::vec2 kClipDistances = {1.0f, 2000.0f};
@@ -21,8 +21,8 @@ const glm::mat4 kModelMatrix{1.0f};
 }
 
 namespace tests {
-BaseTerrainSceneTest::BaseTerrainSceneTest()
-    : _terrain({kHeightmapPath, kHeightmapWidth, kHeightmapHeight}, kLoDFactor)
+BaseTerrainSceneTest::BaseTerrainSceneTest(int n)
+    : _terrain({kHeightmapPath, kHeightmapWidth, kHeightmapHeight}, n * kLoDFactor)
 {
 }
 

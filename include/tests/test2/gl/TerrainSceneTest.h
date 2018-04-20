@@ -11,7 +11,7 @@ namespace test_gl {
 class TerrainSceneTest : public BaseTerrainSceneTest, public framework::GLTest
 {
   public:
-    TerrainSceneTest(bool benchmarkMode, float benchmarkTime);
+    TerrainSceneTest(bool benchmarkMode, float benchmarkTime, int n);
 
     void setup() override;
     void run() override;

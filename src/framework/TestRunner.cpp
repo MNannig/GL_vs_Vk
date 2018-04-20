@@ -107,7 +107,7 @@ int TestRunner::run_gl(int testNumber, bool multithreaded, bool benchmarkMode, f
             // N/A
         } else {
             test =
-                std::unique_ptr<BenchmarkableTest>(new tests::test_gl::TerrainSceneTest(benchmarkMode, benchmarkTime));
+                std::unique_ptr<BenchmarkableTest>(new tests::test_gl::TerrainSceneTest(benchmarkMode, benchmarkTime, n));
         }
         break;
 

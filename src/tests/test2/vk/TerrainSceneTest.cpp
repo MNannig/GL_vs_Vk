@@ -9,7 +9,7 @@
 namespace tests {
 namespace test_vk {
 TerrainSceneTest::TerrainSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
-    : BaseTerrainSceneTest()
+    : BaseTerrainSceneTest(n)
     , VKTest("TerrainSceneTest", benchmarkMode, benchmarkTime)
     , _semaphoreIndex(0u)
 {
