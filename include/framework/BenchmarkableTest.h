@@ -8,11 +8,11 @@ namespace framework {
 class BenchmarkableTest : public TestInterface
 {
   public:
-    BenchmarkableTest(bool benchmarkMode, float benchmarkTime, int n, int nt);
+    BenchmarkableTest(bool benchmarkMode, int benchmark_stat, float benchmarkTime, int n, int nt);
     BenchmarkableTest(bool benchmarkMode, float benchmarkTime);
     virtual ~BenchmarkableTest() = default;
 
-    virtual void printStatistics() const;
+    virtual void printStatistics(int benchmark_stat) const;
     void startMeasuring();
     void startMeasuring(double startTime);
 
@@ -24,6 +24,7 @@ class BenchmarkableTest : public TestInterface
 
     bool _benchmarkEnabled;
     bool _firstSecondIgnored;
+    int _benchmark_stat;
     double _benchmarkTime;
     double _minFrameTime;
     double _maxFrameTime;

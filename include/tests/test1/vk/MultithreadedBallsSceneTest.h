@@ -10,7 +10,7 @@ namespace test_vk {
 class MultithreadedBallsSceneTest : public BaseBallsSceneTest, public framework::VKTest
 {
   public:
-    MultithreadedBallsSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt);
+    MultithreadedBallsSceneTest(bool benchmarkMode, int benchmark_stat ,float benchmarkTime, int n, int nt);
 
     void setup() override;
     void run() override;

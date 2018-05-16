@@ -12,9 +12,9 @@
 
 namespace tests {
 namespace test_vk {
-MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
+MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, int benchmark_stat, float benchmarkTime, int n, int nt)
     : BaseBallsSceneTest()
-    , VKTest("MultithreadedBallsSceneTest", benchmarkMode, benchmarkTime, n, nt)
+    , VKTest("MultithreadedBallsSceneTest", benchmarkMode, benchmark_stat, benchmarkTime, n, nt)
     , _semaphoreIndex(0u)
 {
 }
@@ -38,7 +38,7 @@ void MultithreadedBallsSceneTest::setup()
 
 void MultithreadedBallsSceneTest::run()
 {
-    printf("starting vk test1, n=%i  nt=%i\n", _n, _nt);
+    //printf("starting vk test1, n=%i  nt=%i gl=%i\n", _n, _nt, _benchmark_stat);
     while (!window().shouldClose()) {
         TIME_RESET("Frame times:");
 

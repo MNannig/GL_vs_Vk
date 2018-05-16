@@ -11,9 +11,9 @@
 
 namespace tests {
 namespace test_vk {
-SimpleBallsSceneTest::SimpleBallsSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
+SimpleBallsSceneTest::SimpleBallsSceneTest(bool benchmarkMode, int benchmark_stat, float benchmarkTime, int n, int nt)
     : BaseBallsSceneTest()
-    , VKTest("SimpleBallsSceneTest", benchmarkMode, benchmarkTime, n, nt)
+    , VKTest("SimpleBallsSceneTest", benchmarkMode, benchmark_stat, benchmarkTime, n, nt)
     , _semaphoreIndex(0u)
 {
 }

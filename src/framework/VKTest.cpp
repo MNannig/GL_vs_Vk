@@ -7,8 +7,8 @@ const bool kDebugEnabled = false;
 }
 
 namespace framework {
-VKTest::VKTest(const std::string& testName, bool benchmarkMode, float benchmarkTime, int n, int nt)
-    : BenchmarkableTest(benchmarkMode, benchmarkTime, n, nt)
+VKTest::VKTest(const std::string& testName, bool benchmarkMode, int benchmark_stat, float benchmarkTime, int n, int nt)
+    : BenchmarkableTest(benchmarkMode, benchmark_stat, benchmarkTime, n, nt)
     , base::vkx::Application("[VK] " + testName, {WINDOW_WIDTH, WINDOW_HEIGHT}, kDebugEnabled)
 {
 }
@@ -27,7 +27,7 @@ void VKTest::teardown()
 {
 }
 
-void VKTest::printStatistics() const
+void VKTest::printStatistics(int benchmark_stat) const
 {
     // These values are taken from http://pcidatabase.com/
     auto vendorName = [](uint32_t vendorId) -> std::string {
@@ -51,7 +51,7 @@ void VKTest::printStatistics() const
                std::to_string(VK_VERSION_PATCH(version));
     };
 
-    std::cout << "Hardware/software information" << std::endl;
+    /*std::cout << "Hardware/software information" << std::endl;
     std::cout << "=============================" << std::endl;
     std::cout << "  Vendor:           " << vendorName(deviceInfo().properties.vendorID)
               << " (ID: " << deviceInfo().properties.vendorID << ")" << std::endl;
@@ -65,8 +65,8 @@ void VKTest::printStatistics() const
     std::cout << "Test information" << std::endl;
     std::cout << "================" << std::endl;
     std::cout << "  Name: " << window().title() << std::endl;
-    std::cout << std::endl;
+    std::cout << std::endl;*/
 
-    BenchmarkableTest::printStatistics();
+    BenchmarkableTest::printStatistics(benchmark_stat);
 }
 }

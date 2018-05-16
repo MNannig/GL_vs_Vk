@@ -5,8 +5,8 @@
 #include <iostream>
 
 namespace framework {
-GLTest::GLTest(const std::string& testName, bool benchmarkMode, float benchmarkTime, int n, int nt)
-    : BenchmarkableTest(benchmarkMode, benchmarkTime, n, nt)
+GLTest::GLTest(const std::string& testName, bool benchmarkMode,int benchmark_stat, float benchmarkTime, int n, int nt)
+    : BenchmarkableTest(benchmarkMode, benchmark_stat, benchmarkTime, n, nt)
     , window_({WINDOW_WIDTH, WINDOW_HEIGHT}, "[GL] " + testName)
 {
 }
@@ -29,9 +29,9 @@ void GLTest::teardown()
     window_.deinitialize();
 }
 
-void GLTest::printStatistics() const
+void GLTest::printStatistics(int benchmark_stat) const
 {
-    std::cout << "Hardware/software information" << std::endl;
+    /*std::cout << "Hardware/software information" << std::endl;
     std::cout << "=============================" << std::endl;
     std::cout << "  Vendor:     " << glGetString(GL_VENDOR) << std::endl;
     std::cout << "  Renderer:   " << glGetString(GL_RENDERER) << std::endl;
@@ -40,8 +40,8 @@ void GLTest::printStatistics() const
     std::cout << "Test information" << std::endl;
     std::cout << "================" << std::endl;
     std::cout << "  Name: " << window_.getTitle() << std::endl;
-    std::cout << std::endl;
+    std::cout << std::endl;*/
 
-    BenchmarkableTest::printStatistics();
+    BenchmarkableTest::printStatistics(benchmark_stat);
 }
 }

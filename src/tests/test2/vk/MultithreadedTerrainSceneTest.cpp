@@ -15,9 +15,9 @@
 
 namespace tests {
 namespace test_vk {
-MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
+MultithreadedTerrainSceneTest::MultithreadedTerrainSceneTest(bool benchmarkMode,int benchmark_stat, float benchmarkTime, int n, int nt)
     : BaseTerrainSceneTest(n)
-    , VKTest("MultithreadedTerrainSceneTest", benchmarkMode, benchmarkTime, n, nt)
+    , VKTest("MultithreadedTerrainSceneTest", benchmarkMode, benchmark_stat, benchmarkTime, n, nt)
     , _semaphoreIndex(0u)
 {
 }
@@ -489,14 +489,10 @@ void MultithreadedTerrainSceneTest::presentFrame(std::size_t frameIndex) const
 
 void MultithreadedTerrainSceneTest::createTable(){
         int log_aux = ceil(log(_nt) / log(4));
-        printf("log %i\n", log_aux);
         table_a = pow(4, log_aux);
         table_b = log_aux;
         if(_nt == 1) table_b = 1;
-        printf("logaritmo %i\n", log_aux);
-        printf("potencia %i\n", table_a);
-        int table_c = table_a * table_b;  
-        printf("a %i b %i c %i\n",table_a, table_b, table_c );  
+        int table_c = table_a * table_b;   
         //int table_threads2 [table_c];
         p = (int *)malloc(table_c*sizeof(int));
         //std::cout << "p " << p << " *p " << *p << " \n";
@@ -517,13 +513,7 @@ void MultithreadedTerrainSceneTest::createTable(){
             i = 0;
         }
         
-        //printf(" size %i %s\n", sizeof(p)/sizeof(*p), "PUNTERO");
         
-        for (int i = 0; i < table_c; ++i)
-        {
-            std::cout << p[i]<< " " << i << "\n";
-        }
-        //std::cout << "p final " << p[table_c - 1] << "| puntero *p " << *p << "| P " << p << "\n";
 }
 }
 }

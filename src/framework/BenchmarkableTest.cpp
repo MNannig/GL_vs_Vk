@@ -8,10 +8,11 @@
 #include <string>
 
 namespace framework {
-BenchmarkableTest::BenchmarkableTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
+BenchmarkableTest::BenchmarkableTest(bool benchmarkMode,int benchmark_stat, float benchmarkTime, int n, int nt)
     : TestInterface()
     , _benchmarkEnabled(benchmarkMode)
     , _firstSecondIgnored(false)
+    , _benchmark_stat(benchmark_stat)
     , _benchmarkTime(benchmarkTime)
     , _minFrameTime(std::numeric_limits<double>::max())
     , _maxFrameTime(0.0)
@@ -38,7 +39,7 @@ BenchmarkableTest::BenchmarkableTest(bool benchmarkMode, float benchmarkTime)
 {
 }
 
-void BenchmarkableTest::printStatistics() const
+void BenchmarkableTest::printStatistics(int benchmark_stat) const
 {
     if (!_benchmarkEnabled)
         return;
@@ -50,10 +51,30 @@ void BenchmarkableTest::printStatistics() const
             return std::to_string(1.0 / frameTime);
         }
     };
-
     auto toMs = [](double frameTime) -> std::string { return std::to_string(frameTime * 1000.0) + "ms"; };
-
-    std::cout << "Frame rate statistics" << std::endl;
+    switch (benchmark_stat){
+    case 1:
+        std::cout << toFps(_minFrameTime) << std::endl;
+        break;
+    case 2:
+        std::cout << toFps(_maxFrameTime) << std::endl;
+        break;
+    case 3:
+        std::cout << toFps(_measuredTime / static_cast<double>(_frameCount)) << benchmark_stat << std::endl;
+        break;
+    case 0:
+        std::cout << "Frame rate statistics" << std::endl;
+        std::cout << "=====================" << std::endl;
+        std::cout << "  Minimum frame time: " << toMs(_minFrameTime) << std::endl;
+        std::cout << "  Maximum frame time: " << toMs(_maxFrameTime) << std::endl;
+        std::cout << "  Average frame time: " << toMs(_measuredTime / static_cast<double>(_frameCount)) << std::endl;
+        std::cout << std::endl;
+        std::cout << "  Maximum FPS: " << toFps(_minFrameTime) << std::endl;
+        std::cout << "  Minimum FPS: " << toFps(_maxFrameTime) << std::endl;
+        std::cout << "  Average FPS: " << toFps(_measuredTime / static_cast<double>(_frameCount)) << std::endl;
+        break;
+    }
+    /*std::cout << "Frame rate statistics" << std::endl;
     std::cout << "=====================" << std::endl;
     std::cout << "  Minimum frame time: " << toMs(_minFrameTime) << std::endl;
     std::cout << "  Maximum frame time: " << toMs(_maxFrameTime) << std::endl;
@@ -61,7 +82,7 @@ void BenchmarkableTest::printStatistics() const
     std::cout << std::endl;
     std::cout << "  Maximum FPS: " << toFps(_minFrameTime) << std::endl;
     std::cout << "  Minimum FPS: " << toFps(_maxFrameTime) << std::endl;
-    std::cout << "  Average FPS: " << toFps(_measuredTime / static_cast<double>(_frameCount)) << std::endl;
+    std::cout << "  Average FPS: " << toFps(_measuredTime / static_cast<double>(_frameCount)) << std::endl;*/
 }
 
 void BenchmarkableTest::startMeasuring()
@@ -109,8 +130,8 @@ bool BenchmarkableTest::processFrameTime(double frameTime)
     _maxFrameTime = std::max(_maxFrameTime, frameTime);
     _measuredTime = glfwGetTime() - _startTime;
 
-    std::cerr << "Benchmark ENABLED!!!\n\n\n\n";
-    std::cerr << "Frame time: " << frameTime << "\n\n\n\n";
+    //std::cerr << "Benchmark ENABLED!!!\n\n\n\n";
+    //std::cerr << "Frame time: " << frameTime << "\n\n\n\n";
 
     // Ignore 1s of measurements to remove longer first frames from statistics, but not on 1st frame
     if (!_firstSecondIgnored && _measuredTime >= 1.0 && _frameCount != 1) {

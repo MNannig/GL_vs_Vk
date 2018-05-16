@@ -5,7 +5,7 @@
 
 namespace tests {
 namespace test_gl {
-TerrainSceneTest::TerrainSceneTest(bool benchmarkMode, float benchmarkTime, int n)
+TerrainSceneTest::TerrainSceneTest(bool benchmarkMode,int benchmark_stat, float benchmarkTime, int n)
     : BaseTerrainSceneTest(n)
     , GLTest("TerrainSceneTest", benchmarkMode, benchmarkTime)
     , _ibo(base::gl::Buffer::Target::ElementArray, base::gl::Buffer::Usage::StaticDraw)

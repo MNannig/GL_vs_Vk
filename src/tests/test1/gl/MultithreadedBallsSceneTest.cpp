@@ -10,9 +10,9 @@
 
 namespace tests {
 namespace test_gl {
-MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, float benchmarkTime, int n, int nt)
+MultithreadedBallsSceneTest::MultithreadedBallsSceneTest(bool benchmarkMode, int benchmark_stat, float benchmarkTime, int n, int nt)
     : BaseBallsSceneTest()
-    , GLTest("MultithreadedBallsSceneTest", benchmarkMode, benchmarkTime, n, nt)
+    , GLTest("MultithreadedBallsSceneTest", benchmarkMode, benchmark_stat, benchmarkTime, n, nt)
 {
 }
 
@@ -29,7 +29,6 @@ void MultithreadedBallsSceneTest::setup()
 
 void MultithreadedBallsSceneTest::run()
 {
-    printf("starting gl test1, n=%i  nt=%i\n", _n, _nt);
     while (!window_.shouldClose()) {
         glClear(GL_COLOR_BUFFER_BIT);
 
