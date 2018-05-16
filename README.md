@@ -128,8 +128,8 @@ cd ../bin/
 | `-t` | integer | Specifies test number. |
 | `-api` | integer | Specifies used API. Valid options: `gl`, `vk`. |
 | `-m` | - | Optional. Asks for multithreaded version of test (might not be available). |
-| `-n` | specifies the number of objects inside the test (only valid for test one and two) |
-| `-nt` | specifies the number of threads sued to run the test( same as above)
+| `-n` | integer 1 specifies the number of objects inside the test (only valid for test one and two) |
+| `-nt` | integer | specifies the number of threads sued to run the test( same as above)
 | `-benchmark` | integer | Optional. Enables benchmarking mode(0 for all the stats, 1 for MinFps, 2 for MaxFps and 3 for AvgFps) |
 | `-time` | float | Optional. Changes default time of test benchmarking. |
 
