@@ -126,9 +126,11 @@ cd ../bin/
 | Name | Argument type | Description |
 | :--- | :---: | :---: |
 | `-t` | integer | Specifies test number. |
-| `-api` | string | Specifies used API. Valid options: `gl`, `vk`. |
+| `-api` | integer | Specifies used API. Valid options: `gl`, `vk`. |
 | `-m` | - | Optional. Asks for multithreaded version of test (might not be available). |
-| `-benchmark` | - | Optional. Enables benchmarking mode. |
+| `-n` | specifies the number of objects inside the test (only valid for test one and two) |
+| `-nt` | specifies the number of threads sued to run the test( same as above)
+| `-benchmark` | integer | Optional. Enables benchmarking mode(0 for all the stats, 1 for MinFps, 2 for MaxFps and 3 for AvgFps) |
 | `-time` | float | Optional. Changes default time of test benchmarking. |
 
 In benchmarking mode, test will end automatically in some time (default: 15 seconds, but can be changed with `-time` argument), after which statistics will be presented on screen.
@@ -137,7 +139,7 @@ Test 4 will always run in benchmark mode.
 
 ## Author
 
-I'm the only author of this repository and due to it's nature, for now I can't approve any code contributions. If you have any notes or issues, please raise them and make sure to include your hardware, software and driver version (link to http://vulkan.gpuinfo.org entry would be nice).
+https://github.com/RippeR37/GL_vs_VK
 
 
 ## Contributions
